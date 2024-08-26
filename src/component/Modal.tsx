@@ -1,7 +1,8 @@
-import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const schema = z.object({
   title: z.string()
@@ -53,17 +54,17 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) => {
               <p className="text-red-600 text-sm mt-1">{errors.title.message}</p>
             )}
           </div>
-          <div className="mb-4">
-            <label htmlFor="body" className="block text-sm font-medium text-gray-700">Body</label>
+          <div className="mb-12">
+            <label htmlFor="body" className="block text-sm font-medium text-gray-700 mb-1">Body</label>
             <Controller
               name="body"
               control={control}
               render={({ field }) => (
-                <textarea
+                <ReactQuill
                   id="body"
-                  {...field}
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm"
-                  placeholder="Type here"
+                  value={field.value}
+                  onChange={field.onChange}
+                  className="h-20"
                 />
               )}
             />
@@ -72,8 +73,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) => {
             )}
           </div>
           <div className="flex justify-end">
-            <button type="button" onClick={onClose} className="btn btn-secondary mr-2">Cancel</button>
-            <button type="submit" className="btn btn-primary">Add</button>
+            <button type="button" onClick={onClose} className="btn btn-secondary mr-2 mt-10">Cancel</button>
+            <button type="submit" className="btn btn-primary mt-10">Add</button>
           </div>
         </form>
       </div>

@@ -1,5 +1,4 @@
-// EditButton.tsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { EditButtonProps, Todo } from '../types';
 import EditModal from './EditModal';
 import Swal from 'sweetalert2';

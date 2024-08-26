@@ -3,34 +3,32 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Modal from "./Modal";
 import { mutation } from "../services/api";
 import { Todo } from "../types";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 const AddButton = () => {
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
 
-  const { mutate , error, isPending } = useMutation({
+  const { mutate, error, isPending } = useMutation({
     mutationFn: mutation,
     onSuccess: (newTodo: Todo) => {
       queryClient.invalidateQueries({ queryKey: ["todo"] });
-      // const previousTodos = queryClient.getQueryData<Todo[]>(["todo", 9]) || [];
-      // queryClient.setQueryData(["todo", 9], [...previousTodos, newTodo]);
       Swal.fire({
-        title: 'Success!',
-        text: 'Todo item added successfully.',
-        icon: 'success',
-        confirmButtonText: 'Great'
+        title: "Success!",
+        text: "Todo item added successfully.",
+        icon: "success",
+        confirmButtonText: "Great",
       });
+      if (isPending) return <div>Loading...</div>;
     },
   });
-  if (isPending) return <div>Loading...</div>;
+
   if (error) return <div>An error occurred: {(error as Error).message}</div>;
 
   const handleSubmit = (title: string, body: string) => {
     mutate({ title, body });
   };
 
-  
   return (
     <>
       <div className="flex justify-end">

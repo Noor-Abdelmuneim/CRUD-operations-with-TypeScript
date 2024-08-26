@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ModalProps } from '../types';
 import axiosInstance from '../library/axiosInstance';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const schema = z.object({
   title: z.string()
@@ -69,10 +71,11 @@ const EditModal: React.FC<ModalProps & { todo?: { id: string, title: string, bod
               name="body"
               control={control}
               render={({ field }) => (
-                <textarea
+                <ReactQuill
                   id="body"
-                  {...field}
-                  className="w-full p-2 border border-gray-300 rounded"
+                  value={field.value}
+                  onChange={field.onChange}
+                  className="h-90"
                 />
               )}
             />
